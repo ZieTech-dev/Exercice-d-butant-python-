@@ -1,16 +1,17 @@
 from Equipe import Equipe
+from tinydb import TinyDB, Query
+db = TinyDB('db.json') 
+# nation1 = Equipe("Cote d'Ivoire", 10,"B")
+# nation1.joueurs.extend(["Serge Aurier", "Serge Aurier","Ousmane Diomandé","Franck Kessié","Simon Adingra"])
 
-nation1 = Equipe("Cote d'Ivoire", 10,"B")
-nation1.joueurs.extend(["Serge Aurier", "Serge Aurier","Ousmane Diomandé","Franck Kessié","Simon Adingra"])
+# nation2 = Equipe("Ghana", 8,"C")
+# nation2.joueurs.extend(["Abedi Pelé","Jordan Ayew","Louis Mafouta ","Richard Ofori"])
 
-nation2 = Equipe("Ghana", 8,"C")
-nation2.joueurs.extend(["Abedi Pelé","Jordan Ayew","Louis Mafouta ","Richard Ofori"])
+# nation3 = Equipe("Senegale", 5 ,"B")
+# nation3.joueurs.extend(["Sadio Mané","D. Lopy ","P. Gueye"])
 
-nation3 = Equipe("Senegale", 5 ,"B")
-nation3.joueurs.extend(["Sadio Mané","D. Lopy ","P. Gueye"])
-
-nation4 = Equipe("Egypte", 4 , "C")
-nation4.joueurs.extend(["Salah","Mohamed Gabal"])
+# nation4 = Equipe("Egypte", 4 , "C")
+# nation4.joueurs.extend(["Salah","Mohamed Gabal"])
 
 while True:
     print("\n--- Menu ---")
@@ -113,7 +114,14 @@ while True:
     
     elif choix == "5":
         print("Au revoir!")
+        for equipe in Equipe.instances:
+            db.insert({'Nom': equipe.nom, 'point': equipe.point ,'poule':equipe.poule ,'joueur':[{'nom': joueur} for joueur in equipe.joueurs]})
+        
+            # db.truncate()
         break
     
     else:
         print("Option invalide. Veuillez réessayer.")
+
+print(db.all())
+# print(db.truncate())
