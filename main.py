@@ -1,6 +1,8 @@
 from Equipe import Equipe
 from tinydb import TinyDB, Query
 db = TinyDB('db.json') 
+# ---- creation de quelque equipe avant le dénbogeur ----
+
 # nation1 = Equipe("Cote d'Ivoire", 10,"B")
 # nation1.joueurs.extend(["Serge Aurier", "Serge Aurier","Ousmane Diomandé","Franck Kessié","Simon Adingra"])
 
@@ -50,7 +52,7 @@ while True:
                 i = i + 1
         else:
             print("Aucune équipe n'a été créée.")
-        
+        # ---utulisation du nom  pour selectionner l'élement---
         # nom = input("Entrez le nom de l'équipe à modifier: ")
         # equipe = Equipe.trouver_equipe(nom)
         index = int(input("\nEntrez l'index de l'équipe corespondant avec les chiffres :"))
@@ -99,6 +101,11 @@ while True:
     elif choix == "4":
         print("\n--- liste ---")
         equipes = Equipe.lister_equipes()
+        for item in db:
+            print(f"- {item.nom}, nombre de points est : {item.point} , la poule est : {item.poule}")
+            print("  Liste des joueurs actuels:")
+            for joueur in item.joueur:
+                print(f"  - {joueur}")
         if equipes:
             print("Équipes actuelles:")
             for equipe in Equipe.instances:
@@ -115,8 +122,8 @@ while True:
     elif choix == "5":
         print("Au revoir!")
         for equipe in Equipe.instances:
-            db.insert({'Nom': equipe.nom, 'point': equipe.point ,'poule':equipe.poule ,'joueur':[{'nom': joueur} for joueur in equipe.joueurs]})
-        
+            db.insert({'nom': equipe.nom, 'point': equipe.point ,'poule':equipe.poule ,'joueur':[{'nom': joueur} for joueur in equipe.joueurs]})
+            # ---- suppression totale du fichier -----
             # db.truncate()
         break
     
@@ -124,4 +131,6 @@ while True:
         print("Option invalide. Veuillez réessayer.")
 
 print(db.all())
+
+# --- afficharge de de la suppression du fichier --- 
 # print(db.truncate())
