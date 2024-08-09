@@ -1,15 +1,15 @@
 from Equipe import Equipe
 
-nation1 = Equipe("Cote d'Ivoire")
+nation1 = Equipe("Cote d'Ivoire", 10,"B")
 nation1.joueurs.extend(["Serge Aurier", "Serge Aurier","Ousmane Diomandé","Franck Kessié","Simon Adingra"])
 
-nation2 = Equipe("Ghana")
+nation2 = Equipe("Ghana", 8,"C")
 nation2.joueurs.extend(["Abedi Pelé","Jordan Ayew","Louis Mafouta ","Richard Ofori"])
 
-nation3 = Equipe("Senegale")
+nation3 = Equipe("Senegale", 5 ,"B")
 nation3.joueurs.extend(["Sadio Mané","D. Lopy ","P. Gueye"])
 
-nation4 = Equipe("Egypte")
+nation4 = Equipe("Egypte", 4 , "C")
 nation4.joueurs.extend(["Salah","Mohamed Gabal"])
 
 while True:
@@ -23,8 +23,11 @@ while True:
 
     if choix == "1":
         while True:
+            print("\n--- Menu Insertion joueur---")
             nom = input("Entrez le nom de la nouvelle équipe: ")
-            Equipe.creer_equipe(nom)
+            point = int(input(f"Enterz le nombre de point de l'equipe '{nom}' :"))
+            poule = input(f"Entrez la poule de l'équipe '{nom}' :")
+            Equipe(nom=nom, point=point, poule=poule)
             print(f"L'équipe '{nom}' a été créée.")
             reponse = input("voulez vous ajouter une nouvelle equipe ?(1: oui ; 0 :non)\n choisissez une option: ")
             if reponse == "0":
@@ -35,8 +38,23 @@ while True:
                 break
     
     elif choix == "2":
-        nom = input("Entrez le nom de l'équipe à modifier: ")
-        equipe = Equipe.trouver_equipe(nom)
+        print("\n--- Menu modification ---")
+        print("\n--- liste ---")
+        equipes = Equipe.lister_equipes()
+        if equipes:
+            print("Équipes actuelles:")
+            i = 0
+            for equipe in Equipe.instances:
+                print(f"{i}: {equipe.nom}, nombre(s) de points est : {equipe.point} , la poule est : {equipe.poule}")
+                i = i + 1
+        else:
+            print("Aucune équipe n'a été créée.")
+        
+        # nom = input("Entrez le nom de l'équipe à modifier: ")
+        # equipe = Equipe.trouver_equipe(nom)
+        index = int(input("\nEntrez l'index de l'équipe corespondant avec les chiffres :"))
+        equipe = Equipe.trouver_equipe_by_index(index)
+        
         if equipe:
             print(f"Équipe trouvée: {equipe.nom}")
             print("1. Ajouter un joueur")
@@ -68,6 +86,7 @@ while True:
             print(f"L'équipe '{nom}' n'a pas été trouvée.")
     
     elif choix == "3":
+        print("\n--- Menu Suppression joueur---")
         nom = input("Entrez le nom de l'équipe à supprimer: ")
         equipe = Equipe.trouver_equipe(nom)
         if equipe:
@@ -77,11 +96,12 @@ while True:
             print(f"L'équipe '{nom}' n'a pas été trouvée.")
     
     elif choix == "4":
+        print("\n--- liste ---")
         equipes = Equipe.lister_equipes()
         if equipes:
             print("Équipes actuelles:")
             for equipe in Equipe.instances:
-                print(f"- {equipe.nom}")
+                print(f"- {equipe.nom}, nombre de points est : {equipe.point} , la poule est : {equipe.poule}")
                 if equipe.joueurs:  
                     print("  Liste des joueurs actuels:")
                     for joueur in equipe.joueurs:

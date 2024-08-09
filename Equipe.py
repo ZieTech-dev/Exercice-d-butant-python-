@@ -1,10 +1,11 @@
 class Equipe:
     instances = []
 
-    def __init__(self, nom):
+    def __init__(self, nom, point=1, poule="A"):
         self.nom = nom
         self.joueurs = []
-        self.poule = []
+        self.poule = poule
+        self.point = point
         self.staf = []
         Equipe.instances.append(self)
 
@@ -23,13 +24,26 @@ class Equipe:
     def get_joueur(self):
         return [joueur for joueur in self.joueurs]
 
-    @classmethod
-    def creer_equipe(cls, nom):
-        return cls(nom)
+    def get_point(self):
+        return self.point
+
+    def get_poule(self):
+        return self.poule
+
+    # @classmethod
+    # def creer_equipe(cls, nom):
+    #     return cls(nom)
 
     @classmethod
     def lister_equipes(cls):
         return [equipe.nom for equipe in cls.instances]
+
+    @classmethod
+    def trouver_equipe_by_index(cls,index):
+        for equipe in cls.instances:
+            if cls.instances.index(equipe) == index:
+                return equipe
+        return None
 
     @classmethod
     def trouver_equipe(cls, nom):
