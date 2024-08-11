@@ -101,11 +101,11 @@ while True:
     elif choix == "4":
         print("\n--- liste ---")
         equipes = Equipe.lister_equipes()
-        for item in db:
-            print(f"- {item.nom}, nombre de points est : {item.point} , la poule est : {item.poule}")
+        for item in db.all():
+            print(f"- {item['Nom']}, nombre de points est : {item['point']} , la poule est : {item['poule']}")
             print("  Liste des joueurs actuels:")
-            for joueur in item.joueur:
-                print(f"  - {joueur}")
+            for joueur in item['joueur']:
+                print(f"  - {joueur['nom']}")
         if equipes:
             print("Équipes actuelles:")
             for equipe in Equipe.instances:
@@ -120,6 +120,7 @@ while True:
             print("Aucune équipe n'a été créée.")
     
     elif choix == "5":
+        
         print("Au revoir!")
         for equipe in Equipe.instances:
             db.insert({'nom': equipe.nom, 'point': equipe.point ,'poule':equipe.poule ,'joueur':[{'nom': joueur} for joueur in equipe.joueurs]})
